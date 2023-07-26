@@ -36,10 +36,11 @@ I wanted a small, minimal set of scripts to setup a new Windows 11 installation 
 <li>Set the Windows Update feature to download updates after a year and security updates after 4 days from release.</li>
 <li>Remove bloatware apps</li>
 </ul>
-<h2 align="left">Getting Started</h1>
+<h2 align="left">Getting Started</h2>
 <h3 align="left">Installation</h3>
 <ul>
 <li>Clone the repo to a location and then simply right click on 'Run.cmd' and run as administrator</li>
+	<pre>git clone https://github.com/michaelkeates/AutoWinScripts.git</pre>
 </ul>
 
 <h3 align="left">Updating</h3>
