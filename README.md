@@ -40,7 +40,7 @@ I wanted a small, minimal set of scripts to setup a new Windows 11 installation 
 <h3 align="left">Installation</h3>
 <ul>
 <li>Clone the repo to a location and then simply right click on 'Run.cmd' and run as administrator</li>
-<pre>git clone https://github.com/michaelkeates/AutoWinScripts.git</pre>
+<pre class="gitcode">git clone https://github.com/michaelkeates/AutoWinScripts.git</pre>
 </ul>
 
 <h3 align="left">Updating</h3>
