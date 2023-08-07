@@ -11,11 +11,11 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
 $scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Path
 
 #specify the relative path to the packages.config file
-$packagesConfigPath = Join-Path -Path $scriptDirectory -ChildPath "..\packages.config"
+$packagesConfigPath = Join-Path -Path $scriptDirectory -ChildPath "..\..\packages.config"
 
 #function to process package installation with version handling
 function InstallPackage($packageName, $version) {
-    #if a specific version is provided, use `choco install --version`
+    #if a specific version is provided, use `choco upgrade --version`
     if ($version) {
         & choco upgrade -y $packageName --version $version
     } else {
