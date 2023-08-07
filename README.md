@@ -58,6 +58,9 @@ Chris Titus Tech <a href="https://github.com/ChrisTitusTech/winutil">Windows Uti
 <ul>
 Alekhoff <a href="https://github.com/Alekhoff/chocolatey-fresh-install">Chocolatey-fresh-install</a>
 </ul>
+<ul>
+AveYo <a href="https://gist.github.com/ishad0w/3b79bf829e9725aa102b2e8446bb5ef8">Edge Removal</a>
+</ul>
 
 <h3 align="left">Author</h3>
 <ul>
