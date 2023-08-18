@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://repository-images.githubusercontent.com/669297706/800772a2-ad0a-4a5b-89d1-98d1bf3d444b" width="300px" height="300px"/>
+  <img src="https://repository-images.githubusercontent.com/669297706/38e5a0ec-8178-4f72-8f71-60a4a0cebe5e" width="300px" height="300px"/>
 </p>
 <h1 align="center">Automated Setup and Debloat Script</h1>
 <p align="center">
