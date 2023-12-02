@@ -1,0 +1,1 @@
+$PSScriptRoot/scripts/other/hardware.ps1
