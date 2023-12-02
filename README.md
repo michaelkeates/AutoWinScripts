@@ -22,6 +22,7 @@ I wanted a small, minimal set of scripts to setup a new Windows 11 installation 
 <h3 align="left">Installation</h3>
 <ul>
 <li>Simply open PowerShell as Administrator and run the following commands. Run the commands again to simply update packages if available</li>
+<pre class="gitcode">Set-ExecutionPolicy RemoteSigned</pre>
 <pre class="gitcode">$ScriptFromGitHub = Invoke-WebRequest https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/run.ps1</pre>
 <pre class="gitcode">Invoke-Expression $($ScriptFromGitHub.Content)</pre>
 </ul>

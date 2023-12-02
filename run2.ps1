@@ -39,7 +39,6 @@ if ($installType -eq "Default") {
     RunGitHubScript -scriptUrl $registryUrl
     RunGitHubScript -scriptUrl $servicesUrl
     RunGitHubScript -scriptUrl $removeaappsUrl
-    RunScript -scriptPath $localScriptPath
 }
 
 # Run the local script

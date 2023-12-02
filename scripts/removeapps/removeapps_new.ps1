@@ -1,6 +1,6 @@
-$scriptDirectory = $PSScriptRoot
-$removeappsConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/removeapps.config"
-Invoke-WebRequest -Uri $removeappsConfigUrl -OutFile "$scriptDirectory\removeapps.config"
+param (
+    [string]$removeappsConfigUrl
+)
 
 # Function to process app removal
 function RemoveApp($appName) {
@@ -20,12 +20,12 @@ function EnableRemoteDesktopFirewallRule() {
     netsh advfirewall firewall set rule group="Remote Desktop" new enable=Yes
 }
 
-$removeappsConfigPath = Join-Path -Path $scriptDirectory -ChildPath "removeapps.config"
+$removeappsConfigUrl = Join-Path -Path $scriptDirectory -ChildPath "removeapps.config"
 
 # Process app removal configuration
-if (Test-Path $removeappsConfigPath) {
+if (Test-Path $removeappsConfigUrl) {
     # Read the contents of the removeapps.config file
-    $removeAppsConfig = Get-Content $removeappsConfigPath
+    $removeAppsConfig = Get-Content $removeappsConfigUrl
 
     # Flag to track if Microsoft.RemoteDesktop is enabled in the config
     $remoteDesktopEnabled = $false

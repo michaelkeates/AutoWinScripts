@@ -1,10 +1,22 @@
-$installchocolateyUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/packages/installchocolatey_new2.ps1"
-$packagesConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
 $hardwareUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/hardware.ps1"
 $systemrestoreUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/systemrestore.ps1"
+#chocolatey and packages
+$installchocolateyUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/packages/installchocolatey_new2.ps1"
+$packagesDefaultConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/default/packages.config"
+$packagesMinimalConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
+#registry
 $registryUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/registry/registry_new.ps1"
+$registryDefaultConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/default/registry.config"
+$registryMinimalConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/registry.config"
+#services
 $servicesUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/services/services_new.ps1"
+$servicesDefaultConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/default/services.config"
+$servicesMinimalConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/services.config"
+#removeapps
 $removeaappsUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/removeapps/removeapps_new.ps1"
+$removeappsDefaultConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/default/removeapps.config"
+$removeappsMinimalConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/removeapps.config"
+#choco cleaner
 $localScriptPath = "C:\tools\BCURRAN3\choco-cleaner.ps1"
 
 # Function to execute another PowerShell script
@@ -35,11 +47,10 @@ $installType = Read-Host "Choose installation type (Minimal/Default)"
 if ($installType -eq "Default") {
     RunGitHubScript -scriptUrl $hardwareUrl
     RunGitHubScript -scriptUrl $systemrestoreUrl
-    RunGitHubScript -scriptUrl $installchocolateyUrl -parameters @{ packagesConfigUrl = $packagesConfigUrl }
-    RunGitHubScript -scriptUrl $registryUrl
-    RunGitHubScript -scriptUrl $servicesUrl
-    RunGitHubScript -scriptUrl $removeaappsUrl
-    RunScript -scriptPath $localScriptPath
+    RunGitHubScript -scriptUrl $installchocolateyUrl -parameters @{ packagesConfigUrl = $packagesDefaultConfigUrl }
+    RunGitHubScript -scriptUrl $registryUrl -parameters @{ registryConfigUrl = $registryConfigUrl }
+    RunGitHubScript -scriptUrl $servicesUrl -parameters @{ servicesConfigUrl = $servicesDefaultConfigUrl }
+    RunGitHubScript -scriptUrl $removeaappsUrl -parameters @{ removeappsConfigPath = $removeappsDefaultConfigUrl }
 }
 
 # Run the local script
