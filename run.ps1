@@ -1,5 +1,6 @@
-# URL of the PowerShell script on GitHub
-$githubScriptUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/minimal.ps1"
+# URL of the PowerShell scripts on GitHub
+$hardwareUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/hardware.ps1"
+$systemrestoreUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/systemrestore.ps1"
 
 # Function to execute another PowerShell script
 function RunGitHubScript($scriptUrl) {
@@ -7,13 +8,14 @@ function RunGitHubScript($scriptUrl) {
         # Download the script from GitHub
         $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
 
-        # Execute the script content
-        Invoke-Expression -Command $scriptContent
+        # Execute the script content in a new scope
+        & ([ScriptBlock]::Create($scriptContent))
     }
     catch {
         Write-Host "Failed to download or execute the GitHub script from $scriptUrl. Error: $_"
     }
 }
 
-# Run the GitHub script
-RunGitHubScript -scriptUrl $githubScriptUrl
+# Run the GitHub scripts
+RunGitHubScript -scriptUrl $hardwareUrl
+RunGitHubScript -scriptUrl $systemrestoreUrl
