@@ -45,7 +45,7 @@ function EnableRemoteDesktopFirewallRule() {
 Invoke-WebRequest -Uri $removeappsConfigUrl -OutFile "$scriptDirectory\removeapps.config"
 
 # Process app removal configuration
-if (Test-Path $removeappsConfigUrl) {
+if (Test-Path "$scriptDirectory\removeapps.config") {
     # Read the contents of the removeapps.config file
     $removeappsConfig = Get-Content "$scriptDirectory\removeapps.config"
 
