@@ -7,6 +7,7 @@ $systemrestoreUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScri
 $installchocolateyUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/packages/installchocolatey_new.ps1"
 $registryUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/registry/registry_new.ps1"
 $servicesUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/services/services_new.ps1"
+$removeaappsUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/removeapps/removeapps_new.ps1"
 
 # Function to execute another PowerShell script
 function RunGitHubScript($scriptUrl) {
@@ -28,3 +29,4 @@ RunGitHubScript -scriptUrl $systemrestoreUrl
 RunGitHubScript -scriptUrl $installchocolateyUrl
 RunGitHubScript -scriptUrl $registryUrl
 RunGitHubScript -scriptUrl $servicesUrl
+RunGitHubScript -scriptUrl $removeaappsUrl
