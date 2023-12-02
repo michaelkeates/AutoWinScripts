@@ -1,65 +1,91 @@
-#get the directory path of the script
-$scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Path
+param (
+    [string]$removeappsConfigUrl
+)
 
-#specify the relative path to the removeapps.config file
-$removeAppsConfigPath = Join-Path -Path $scriptDirectory -ChildPath "..\..\removeapps.config"
-
-#function to process app removal
+# Function to process app removal
 function RemoveApp($appName) {
-    #use `Get-AppxPackage` without `Version` parameter to remove all versions of the app
+    # Use `Get-AppxPackage` without `Version` parameter to remove all versions of the app
     Get-AppxPackage -Name *$appName* -AllUsers | Remove-AppxPackage
 }
 
-#function to run another PowerShell script
-function RunScript($scriptName) {
-    $scriptPath = Join-Path -Path $scriptDirectory -ChildPath $scriptName
-    if (Test-Path $scriptPath) {
-        & $scriptPath
+# Function to run another PowerShell script
+function RunScript($scriptUrl) {
+    try {
+        # Download the script content from the URL
+        $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
+
+        # Check if the script content is not null
+        if ($scriptContent -ne $null) {
+            # Create a script block from the content
+            $scriptBlock = [ScriptBlock]::Create($scriptContent)
+
+            # Check if the script block is not null
+            if ($scriptBlock -ne $null) {
+                # Execute the script block
+                & $scriptBlock
+            } else {
+                Write-Host "Failed to create a valid script block from the downloaded content."
+            }
+        } else {
+            Write-Host "Failed to download script content from $scriptUrl."
+        }
+    }
+    catch {
+        Write-Host "Failed to download or execute the GitHub script from $scriptUrl. Error: $_"
     }
 }
 
-#function to enable Remote Desktop firewall rule
+# Function to enable Remote Desktop firewall rule
 function EnableRemoteDesktopFirewallRule() {
     netsh advfirewall firewall set rule group="Remote Desktop" new enable=Yes
 }
 
-#process app removal configuration
-if (Test-Path $removeAppsConfigPath) {
-    #read the contents of the removeapps.config file
-    $removeAppsConfig = Get-Content $removeAppsConfigPath
+# Attempt to download the removeapps.config file
+try {
+    Invoke-WebRequest -Uri $removeappsConfigUrl -OutFile "$scriptDirectory\removeapps.config"
+    
+    if (Test-Path "$scriptDirectory\removeapps.config") {
+        Write-Host "removeapps.config file downloaded successfully."
 
-    #flag to track if Microsoft.RemoteDesktop is enabled in the config
-    $remoteDesktopEnabled = $false
+        # Read the contents of the removeapps.config file
+        $removeappsConfig = Get-Content "$scriptDirectory\removeapps.config"
 
-    #for each line in the removeapps.config file
-    foreach ($line in $removeAppsConfig) {
-        #skip comment lines that begin with #
-        if (-not ($line -match '^\s*#')) {
-            #extract the app name from the line
-            $appName = $line.Trim()
+        # Flag to track if Microsoft.RemoteDesktop is enabled in the config
+        $remoteDesktopEnabled = $false
 
-            #check if the app name is Microsoft.RemoteDesktop
-            if ($appName -eq "Microsoft.RemoteDesktop") {
-                #set the flag to true if not commented out
-                $remoteDesktopEnabled = $true
-            }
-            else {
-                #process app removal
-                RemoveApp -appName $appName
+        # For each line in the removeapps.config file
+        foreach ($line in $removeAppsConfig) {
+            # Skip comment lines that begin with #
+            if (-not ($line -match '^\s*#')) {
+                # Extract the app name from the line
+                $appName = $line.Trim()
 
-                #check if the app name is Microsoft.Edge exists and run another script
-                if ($appName -eq "Microsoft.Edge") {
-                    & $PSScriptRoot\removeedge.ps1
+                # Check if the app name is Microsoft.RemoteDesktop
+                if ($appName -eq "Microsoft.RemoteDesktop") {
+                    # Set the flag to true if not commented out
+                    $remoteDesktopEnabled = $true
+                }
+                else {
+                    # Process app removal
+                    RemoveApp -appName $appName
+
+                    # Check if the app name is Microsoft.Edge exists and run another script
+                    if ($appName -eq "Microsoft.Edge") {
+                        $edgeRemovalScriptUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/removeapps/removeedge.ps1"
+                        RunScript -scriptUrl $edgeRemovalScriptUrl
+                    }
                 }
             }
         }
-    }
 
-    #check if Microsoft.RemoteDesktop is not enabled and enable the firewall rule
-    if (-not $remoteDesktopEnabled) {
-        EnableRemoteDesktopFirewallRule
+        # Check if Microsoft.RemoteDesktop is not enabled and enable the firewall rule
+        if (-not $remoteDesktopEnabled) {
+            EnableRemoteDesktopFirewallRule
+        }
+    } else {
+        Write-Host "removeapps.config file not found in the expected location."
     }
 }
-else {
-    Write-Host "removeapps.config file not found in the expected location."
+catch {
+    Write-Host "Failed to download removeapps.config file from $removeappsConfigUrl. Error: $_"
 }

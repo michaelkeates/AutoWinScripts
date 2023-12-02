@@ -1,23 +1,21 @@
-#get the directory path of the script
-$scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Path
+$scriptDirectory = $PSScriptRoot
+$registryConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/registry.config"
+Invoke-WebRequest -Uri $registryConfigUrl -OutFile "$scriptDirectory\registry.config"
 
-#specify the relative path to the registry.config file
-$registryConfigPath = Join-Path -Path $scriptDirectory -ChildPath "..\..\registry.config"
-
-#function to process registry configuration
+# Function to process registry configuration
 function ProcessRegistryConfiguration($path, $name, $value, $force) {
-    #convert the force value to a boolean
+    # Convert the force value to a boolean
     $force = $force -eq 1
 
-    #check if the registry path and name are not empty
+    # Check if the registry path and name are not empty
     if (![string]::IsNullOrEmpty($path) -and ![string]::IsNullOrEmpty($name)) {
-        #check if the registry path exists
+        # Check if the registry path exists
         if (Test-Path $path) {
-            #set the registry item property using the specified values
+            # Set the registry item property using the specified values
             Set-ItemProperty -Path $path -Name $name -Value $value -Force:$force
             Write-Host "Registry item property set for $name"
         } else {
-            #create a new registry item
+            # Create a new registry item
             New-Item -Path $path -Force | Out-Null
             Write-Host "New registry item created: $path"
         }
@@ -26,26 +24,29 @@ function ProcessRegistryConfiguration($path, $name, $value, $force) {
     }
 }
 
-#process registry configuration
-if (Test-Path $registryConfigPath) {
-    #read the contents of the registry.config file
-    $registryConfig = Get-Content $registryConfigPath
+# Process registry configuration from the URL
+try {
+    # Attempt to download the registry.config file
+    Invoke-WebRequest -Uri $registryConfigUrl -OutFile "$scriptDirectory\registry.config"
 
-    #flag to indicate whether to process new registry items
+    # Read the contents of the registry.config file
+    $registryConfig = Get-Content "$scriptDirectory\registry.config"
+
+    # Flag to indicate whether to process new registry items
     $processNewItems = $false
-    #flag to indicate whether to remove items
+    # Flag to indicate whether to remove items
     $removeItems = $false
 
-    #for each line in the registry.config file
+    # For each line in the registry.config file
     foreach ($line in $registryConfig) {
-        #skip comment lines that begin with #
+        # Skip comment lines that begin with #
         if ($line -match '^\s*#') {
-            #check if the line is the marker for adding new items
+            # Check if the line is the marker for adding new items
             if ($line -match '^\s*#ADDNEWITEMS#') {
                 $processNewItems = $true
                 $removeItems = $false
             }
-            #check if the line is the marker for removing items
+            # Check if the line is the marker for removing items
             if ($line -match '^\s*#REMOVEITEMS#') {
                 $processNewItems = $false
                 $removeItems = $true
@@ -53,32 +54,32 @@ if (Test-Path $registryConfigPath) {
             continue
         }
 
-        #split the line by comma to separate registry path, name, value, and force
+        # Split the line by a comma to separate registry path, name, value, and force
         $registryData = $line -split ","
-        
-        #check if the line is correctly formatted
+
+        # Check if the line is correctly formatted
         if ($registryData.Length -ge 3) {
             $path = $registryData[0].Trim()
             $name = $registryData[1].Trim()
             $value = $registryData[2].Trim()
             $force = 1
 
-            #process registry configuration
+            # Process registry configuration
             if (!$removeItems) {
                 ProcessRegistryConfiguration -path $path -name $name -value $value -force $force
             } else {
-                #remove the specified registry item
+                # Remove the specified registry item
                 if (Test-Path $path) {
                     Remove-Item -Path $path -Recurse -ErrorAction SilentlyContinue
                     Write-Host "Registry item removed: $path"
                 }
             }
         } elseif ($processNewItems -and $registryData.Length -ge 1) {
-            #check if new items should be processed
+            # Check if new items should be processed
             $path = $registryData[0].Trim()
             $name = $registryData[1].Trim()
 
-            #create a new registry item
+            # Create a new registry item
             if (![string]::IsNullOrEmpty($path)) {
                 New-Item -Path $path -Force | Out-Null
                 Write-Host "New registry item created: $path"
@@ -88,7 +89,6 @@ if (Test-Path $registryConfigPath) {
         }
     }
 }
-else {
-    #will update this to grab the latest from GitHub repo
-    Write-Host "registry.config file not found."
+catch {
+    Write-Host "Failed to download registry.config file from $registryConfigUrl. Error: $_"
 }

@@ -16,12 +16,13 @@ I wanted a small, minimal set of scripts to setup a new Windows 11 installation 
 <li>Disable or changes the start type for services defined from a config file.</li>
 <li>Enable options such as 'Show File Extensions' among others automatically as well as disabling telemetry from a config file.</li>
 <li>Set the Windows Update feature to download updates after a year and security updates after 4 days from release.</li>
-<li>Remove bloatware apps</li>
+<li>Remove bloatware apps including Edge</li>
 </ul>
 <h2 align="left">Getting Started</h2>
 <h3 align="left">Installation</h3>
 <ul>
-<li>Simply open PowerShell as Administrator and run the following commands. Run the commands again to simply update packages if available</li>
+<li>Simply open PowerShell as Administrator and run the following commands</li>
+<br></br>
 <pre class="gitcode">Set-ExecutionPolicy RemoteSigned</pre>
 <pre class="gitcode">$ScriptFromGitHub = Invoke-WebRequest https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/run.ps1</pre>
 <pre class="gitcode">Invoke-Expression $($ScriptFromGitHub.Content)</pre>
