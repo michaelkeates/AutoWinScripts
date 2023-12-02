@@ -19,7 +19,6 @@ $removeappsMinimalConfigUrl = "https://raw.githubusercontent.com/michaelkeates/A
 #choco cleaner
 $localScriptPath = "C:\tools\BCURRAN3\choco-cleaner.ps1"
 
-# Function to execute another PowerShell script
 function RunGitHubScript($scriptUrl, $parameters = @{}) {
     try {
         # Download the script from GitHub
