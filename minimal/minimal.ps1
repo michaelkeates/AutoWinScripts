@@ -45,10 +45,14 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
 }
 
 #get the directory path of the script
-$scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Path
+#$scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Path
 
 #specify the relative path to the packages.config file
-$packagesConfigPath = Join-Path -Path $scriptDirectory -ChildPath "packages.config"
+#$packagesConfigPath = Join-Path -Path $scriptDirectory -ChildPath "packages.config"
+
+$scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$packagesConfigPath = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
+Invoke-WebRequest -Uri $packagesConfigUrl -OutFile "$scriptDirectory\packages.config"
 
 #function to process package installation with version handling
 function InstallPackage($packageName, $version) {
