@@ -1,6 +1,7 @@
 # URL of the PowerShell scripts on GitHub
 $hardwareUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/hardware.ps1"
 $systemrestoreUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/systemrestore.ps1"
+$installchocolateyUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/packages/installchocolatey_new.ps1"
 
 # Function to execute another PowerShell script
 function RunGitHubScript($scriptUrl) {
@@ -19,3 +20,4 @@ function RunGitHubScript($scriptUrl) {
 # Run the GitHub scripts
 RunGitHubScript -scriptUrl $hardwareUrl
 RunGitHubScript -scriptUrl $systemrestoreUrl
+RunGitHubScript -scriptUrl $installchocolatey_new
