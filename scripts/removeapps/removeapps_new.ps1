@@ -9,11 +9,10 @@ function RemoveApp($appName) {
 }
 
 # Function to run another PowerShell script
-function RunScript($scriptName) {
-    $scriptPath = Join-Path -Path $scriptDirectory -ChildPath $scriptName
-    if (Test-Path $scriptPath) {
-        & $scriptPath
-    }
+function RunScript($scriptUrl) {
+    $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
+    $scriptBlock = [ScriptBlock]::Create($scriptContent)
+    & $scriptBlock
 }
 
 # Function to enable Remote Desktop firewall rule
