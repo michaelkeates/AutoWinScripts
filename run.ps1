@@ -8,6 +8,7 @@ $installchocolateyUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWin
 $registryUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/registry/registry_new.ps1"
 $servicesUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/services/services_new.ps1"
 $removeaappsUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/removeapps/removeapps_new.ps1"
+$localScriptPath = "C:\tools\BCURRAN3\choco-cleaner.ps1"
 
 # Function to execute another PowerShell script
 function RunGitHubScript($scriptUrl) {
@@ -30,3 +31,4 @@ RunGitHubScript -scriptUrl $installchocolateyUrl
 RunGitHubScript -scriptUrl $registryUrl
 RunGitHubScript -scriptUrl $servicesUrl
 RunGitHubScript -scriptUrl $removeaappsUrl
+RunScript -scriptPath $localScriptPath
