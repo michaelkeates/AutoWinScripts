@@ -66,27 +66,25 @@ function InstallPackage($packageName, $version) {
 }
 
 #process package configuration
-if (Test-Path $packagesConfigUrl) {
-    #read the contents of the packages.config file
-    $packagesConfig = Get-Content $packagesConfigUrl
+try {
+    # Attempt to download the packages.config file
+    Invoke-WebRequest -Uri $packagesConfigUrl -OutFile "$scriptDirectory\packages.config"
 
-    #for each line in the packages.config file
+    # Process package configuration
+    $packagesConfig = Get-Content "$scriptDirectory\packages.config"
+
     foreach ($line in $packagesConfig) {
-        #skip comment lines that begin with #
         if (-not ($line -match '^\s*#')) {
-            #extract the package name and version from the line
             $packageName, $version = $line -split ",", 2
             $packageName = $packageName.Trim()
             if ($version) {
                 $version = $version.Trim()
             }
 
-            #process package installation
             InstallPackage -packageName $packageName -version $version
         }
     }
 }
-else {
-    #will update this to grab latest from GitHub repo
-    Write-Host "packages.config file not found in the expected location."
+catch {
+    Write-Host "Failed to download packages.config file from $packagesConfigUrl. Error: $_"
 }
