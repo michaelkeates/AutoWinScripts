@@ -1,11 +1,6 @@
-# Specify the URL to the registry.config file on GitHub
-$registryConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/registry.config"
-
-# Get the directory path of the script
 $scriptDirectory = $PSScriptRoot
-
-# Specify the relative path to the registry.config file
-$registryConfigPath = Join-Path -Path $scriptDirectory -ChildPath "registry.config"
+$registryConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/registry.config"
+Invoke-WebRequest -Uri $registryConfigUrl -OutFile "$scriptDirectory\registry.config"
 
 # Function to process registry configuration
 function ProcessRegistryConfiguration($path, $name, $value, $force) {
