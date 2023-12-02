@@ -1,1 +1,1 @@
-$PSScriptRoot/scripts/other/hardware.ps1
+$PSScriptRoot/test.ps1
