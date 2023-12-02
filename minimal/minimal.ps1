@@ -51,7 +51,7 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
 #$packagesConfigPath = Join-Path -Path $scriptDirectory -ChildPath "packages.config"
 
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$packagesConfigPath = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
+$packagesConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
 Invoke-WebRequest -Uri $packagesConfigUrl -OutFile "$scriptDirectory\packages.config"
 
 #function to process package installation with version handling
@@ -66,9 +66,9 @@ function InstallPackage($packageName, $version) {
 }
 
 #process package configuration
-if (Test-Path $packagesConfigPath) {
+if (Test-Path $packagesConfigUrl) {
     #read the contents of the packages.config file
-    $packagesConfig = Get-Content $packagesConfigPath
+    $packagesConfig = Get-Content $packagesConfigUrl
 
     #for each line in the packages.config file
     foreach ($line in $packagesConfig) {
