@@ -32,3 +32,5 @@ RunGitHubScript -scriptUrl $registryUrl
 RunGitHubScript -scriptUrl $servicesUrl
 RunGitHubScript -scriptUrl $removeaappsUrl
 RunScript -scriptPath $localScriptPath
+
+Get-Command -Name * | ForEach-Object { Remove-Item -Path Function:\$($_.Name) -ErrorAction SilentlyContinue }
