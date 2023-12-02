@@ -1,3 +1,6 @@
+# Use $PSScriptRoot to get the script directory
+$scriptDirectory = $PSScriptRoot
+
 # URL of the PowerShell scripts on GitHub
 $hardwareUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/hardware.ps1"
 $systemrestoreUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/systemrestore.ps1"
