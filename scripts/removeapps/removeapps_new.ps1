@@ -10,10 +10,31 @@ function RemoveApp($appName) {
 
 # Function to run another PowerShell script
 function RunScript($scriptUrl) {
-    $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
-    $scriptBlock = [ScriptBlock]::Create($scriptContent)
-    & $scriptBlock
+    try {
+        # Download the script content from the URL
+        $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
+
+        # Check if the script content is not null
+        if ($scriptContent -ne $null) {
+            # Create a script block from the content
+            $scriptBlock = [ScriptBlock]::Create($scriptContent)
+
+            # Check if the script block is not null
+            if ($scriptBlock -ne $null) {
+                # Execute the script block
+                & $scriptBlock
+            } else {
+                Write-Host "Failed to create a valid script block from the downloaded content."
+            }
+        } else {
+            Write-Host "Failed to download script content from $scriptUrl."
+        }
+    }
+    catch {
+        Write-Host "Failed to download or execute the GitHub script from $scriptUrl. Error: $_"
+    }
 }
+
 
 # Function to enable Remote Desktop firewall rule
 function EnableRemoteDesktopFirewallRule() {
