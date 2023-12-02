@@ -20,12 +20,13 @@ function EnableRemoteDesktopFirewallRule() {
     netsh advfirewall firewall set rule group="Remote Desktop" new enable=Yes
 }
 
-$removeappsConfigUrl = Join-Path -Path $scriptDirectory -ChildPath "removeapps.config"
+# Attempt to download the registry.config file
+Invoke-WebRequest -Uri $removeappsConfigUrl -OutFile "$scriptDirectory\removeapps.config"
 
 # Process app removal configuration
 if (Test-Path $removeappsConfigUrl) {
     # Read the contents of the removeapps.config file
-    $removeAppsConfig = Get-Content $removeappsConfigUrl
+    $removeappsConfig = Get-Content "$scriptDirectory\removeapps.config"
 
     # Flag to track if Microsoft.RemoteDesktop is enabled in the config
     $remoteDesktopEnabled = $false
