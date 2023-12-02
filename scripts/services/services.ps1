@@ -1,9 +1,9 @@
-$scriptDirectory = $PSScriptRoot
-$registryConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/services/services.config"
-$localConfigPath = "$scriptDirectory\services.config"
+param (
+    [string]$servicesConfigUrl
+)
 
 # Download services.config file
-Invoke-WebRequest -Uri $registryConfigUrl -OutFile $localConfigPath
+Invoke-WebRequest -Uri $servicesConfigUrl -OutFile $localConfigPath
 
 # Function to process service configuration
 function ProcessServiceConfiguration($serviceName, $startupType) {
