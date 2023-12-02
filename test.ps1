@@ -24,6 +24,13 @@ function RunGitHubScript($scriptUrl) {
     }
 }
 
+# Function to run another PowerShell script
+function RunScript($scriptPath) {
+    if (Test-Path $scriptPath) {
+        & $scriptPath
+    }
+}
+
 # Run the GitHub scripts
 RunGitHubScript -scriptUrl $hardwareUrl
 RunGitHubScript -scriptUrl $systemrestoreUrl
