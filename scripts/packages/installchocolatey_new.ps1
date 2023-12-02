@@ -8,7 +8,9 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
     Write-Host "Chocolatey is already installed. Skipping installation."
 }
 
-$scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+# Determine the script directory
+$scriptDirectory = $PSScriptRoot
+
 $packagesConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
 Invoke-WebRequest -Uri $packagesConfigUrl -OutFile "$scriptDirectory\packages.config"
 
