@@ -48,9 +48,18 @@ if ($installType -eq "Default") {
     RunGitHubScript -scriptUrl $hardwareUrl
     RunGitHubScript -scriptUrl $systemrestoreUrl
     RunGitHubScript -scriptUrl $installchocolateyUrl -parameters @{ packagesConfigUrl = $packagesDefaultConfigUrl }
-    RunGitHubScript -scriptUrl $registryUrl -parameters @{ registryConfigUrl = $registryConfigUrl }
+    RunGitHubScript -scriptUrl $registryUrl -parameters @{ registryConfigUrl = $registryDefaultConfigUrl }
     RunGitHubScript -scriptUrl $servicesUrl -parameters @{ servicesConfigUrl = $servicesDefaultConfigUrl }
-    RunGitHubScript -scriptUrl $removeaappsUrl -parameters @{ removeappsConfigPath = $removeappsDefaultConfigUrl }
+    RunGitHubScript -scriptUrl $removeaappsUrl -parameters @{ removeappsConfigUrl = $removeappsDefaultConfigUrl }
+}
+
+if ($installType -eq "Minimal") {
+    RunGitHubScript -scriptUrl $hardwareUrl
+    RunGitHubScript -scriptUrl $systemrestoreUrl
+    RunGitHubScript -scriptUrl $installchocolateyUrl -parameters @{ packagesConfigUrl = $packagesMinimalConfigUrl }
+    RunGitHubScript -scriptUrl $registryUrl -parameters @{ registryConfigUrl = $registryMinimalConfigUrl }
+    RunGitHubScript -scriptUrl $servicesUrl -parameters @{ servicesConfigUrl = $servicesMinimalConfigUrl }
+    RunGitHubScript -scriptUrl $removeaappsUrl -parameters @{ removeappsConfigUrl = $removeappsMinimalConfigUrl }
 }
 
 # Run the local script
