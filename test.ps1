@@ -1,31 +1,21 @@
-Write-Host "============================"
-Write-Host "Automated Setup and Debloat Script"
-Write-Host "============================"
-Write-Host "Please wait... Checking system information."
+# URL of the PowerShell scripts on GitHub
+$hardwareUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/hardware.ps1"
+$systemrestoreUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/scripts/other/systemrestore.ps1"
 
-#OS information.
-Write-Host "============================"
-Write-Host "OS INFO"
-Write-Host "============================"
-Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty Caption
-Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty Version
-Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty OSArchitecture
+# Function to execute another PowerShell script
+function RunGitHubScript($scriptUrl) {
+    try {
+        # Download the script from GitHub
+        $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
 
-#Hardware information.
-Write-Host "============================"
-Write-Host "HARDWARE INFO"
-Write-Host "============================"
-Get-CimInstance -Class Win32_ComputerSystem | Select-Object -ExpandProperty TotalPhysicalMemory
-Get-CimInstance -Class Win32_Processor | Select-Object -ExpandProperty Name
+        # Execute the script content in a new scope
+        & ([ScriptBlock]::Create($scriptContent))
+    }
+    catch {
+        Write-Host "Failed to download or execute the GitHub script from $scriptUrl. Error: $_"
+    }
+}
 
-#Networking information.
-Write-Host "============================"
-Write-Host "NETWORK INFO"
-Write-Host "============================"
-Get-NetIPAddress | Where-Object {$_.AddressFamily -eq 'IPv4'}
-Get-NetIPAddress | Where-Object {$_.AddressFamily -eq 'IPv6'}
-
-#Wait for 5 seconds so view what ip address been given to machine
-Write-Host "============================"
-Write-Host "Waiting for 5 seconds..."
-Start-Sleep -Seconds 5
+# Run the GitHub scripts
+RunGitHubScript -scriptUrl $hardwareUrl
+RunGitHubScript -scriptUrl $systemrestoreUrl
