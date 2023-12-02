@@ -21,6 +21,13 @@ function RunGitHubScript($scriptUrl, $parameters = @{}) {
     }
 }
 
+# Function to run another PowerShell script
+function RunScript($scriptPath) {
+    if (Test-Path $scriptPath) {
+        & $scriptPath
+    }
+}
+
 # Prompt the user to choose between Minimal and Default installation
 $installType = Read-Host "Choose installation type (Minimal/Default)"
 
