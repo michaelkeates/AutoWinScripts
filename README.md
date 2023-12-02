@@ -2,30 +2,12 @@
   <img src="https://repository-images.githubusercontent.com/669297706/38e5a0ec-8178-4f72-8f71-60a4a0cebe5e" width="300px" height="300px"/>
 </p>
 <h1 align="center">Automated Setup and Debloat Script</h1>
-<p align="center">
 
-<a href="http://unlicense.org/">
-<img src="https://img.shields.io/badge/license-Unlicense-blue.svg" alt="License: Unlicense">
-</a>
-
-<a href="https://github.com/michaelkeates/AutoWinScripts/issues">
-<img src="https://img.shields.io/github/issues/michaelkeates/AutoWinScripts.svg" alt="Issues">
-</a>
-
-<a href="https://github.com/michaelkeates/AutoWinScripts/fork">
-<img src="https://img.shields.io/github/forks/michaelkeates/AutoWinScripts.svg" alt="Forks">
-</a>
-
-<a href="https://github.com/michaelkeates/AutoWinScripts">
-<img src="https://img.shields.io/github/stars/michaelkeates/AutoWinScripts.svg" alt="Stars">
-</a>
-
-</p>
 A personal automated group of powershell scripts to download and install packages, disable services and debloat a new Windows 11 installation.
 <br></br>
 <h2 align="left">Description</h2>
 
-I wanted a small, minimal set of scripts to setup a new Windows 11 installation that is 'hands free'. The purpose is to enable a few features and tweaks, download and install the latest software using Chocolatey as well the capability to update them in as quickly as possible with little to no input from the user. I listed a few authors' work below that I viewed to learn so all rights goes to them. Please note if you are going to use this script, I don't take any responsibility if something breaks and you are prepared to use this at your own risk! Also it is always good practice to view the source, to better understand what the script does. More notes and descriptions will be added in due time. More details about AutoWinScript can be viewed <a href="https://www.michaelkeates.co.uk/posts/winautoscripts">here</a>.
+I wanted a small, minimal set of scripts to setup a new Windows 11 installation that is 'hands free'. The purpose is to enable a few features and tweaks, download and install the latest software using Chocolatey as well the capability to update them in as quickly as possible with little to no input from the user. I listed a few authors' work below that I viewed to learn so all rights goes to them. Please note if you are going to use this script, I don't take any responsibility if something breaks and you are prepared to use this at your own risk! It is always good practice to view the source, to better understand what the script does. More notes and descriptions will be added in due time. More details about AutoWinScript can be viewed <a href="https://www.michaelkeates.co.uk/posts/winautoscripts">here</a>.
 
 <h3 align="left">Features</h3>
 <ul>
@@ -39,13 +21,9 @@ I wanted a small, minimal set of scripts to setup a new Windows 11 installation 
 <h2 align="left">Getting Started</h2>
 <h3 align="left">Installation</h3>
 <ul>
-<li>Clone the repo to a location and then simply right click on 'Run.cmd' and run as administrator</li>
-<pre class="gitcode">git clone https://github.com/michaelkeates/AutoWinScripts.git</pre>
-</ul>
-
-<h3 align="left">Updating</h3>
-<ul>
-<li>Right click on 'Run.cmd' and run as administrator again to update any packages if available.</li>
+<li>Simply open PowerShell as Administrator and run the following commands. Run the commands again to simply update packages if available</li>
+<pre class="gitcode">$ScriptFromGitHub = Invoke-WebRequest https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/run.ps1</pre>
+<pre class="gitcode">Invoke-Expression $($ScriptFromGitHub.Content)</pre>
 </ul>
 
 <h3 align="left">Mentions</h3>
