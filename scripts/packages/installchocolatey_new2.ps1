@@ -11,6 +11,17 @@ if (!(Get-Command choco -ErrorAction SilentlyContinue)) {
     Write-Host "Chocolatey is already installed. Skipping installation."
 }
 
+#function to process package installation with version handling
+function InstallPackage($packageName, $version) {
+    #if a specific version is provided, use `choco upgrade --version`
+    if ($version) {
+        & choco upgrade -y $packageName --version $version
+    } else {
+        #if no version is provided, use `choco upgrade` to install the latest version
+        & choco upgrade -y $packageName
+    }
+}
+
 # Process package configuration
 try {
     # Attempt to download the packages.config file
