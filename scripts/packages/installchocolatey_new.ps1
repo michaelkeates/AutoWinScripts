@@ -8,12 +8,6 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
     Write-Host "Chocolatey is already installed. Skipping installation."
 }
 
-#get the directory path of the script
-#$scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Path
-
-#specify the relative path to the packages.config file
-#$packagesConfigPath = Join-Path -Path $scriptDirectory -ChildPath "packages.config"
-
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $packagesConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
 Invoke-WebRequest -Uri $packagesConfigUrl -OutFile "$scriptDirectory\packages.config"
