@@ -11,6 +11,7 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
 # Determine the script directory
 $scriptDirectory = $PSScriptRoot
 
+# Rest of the script...
 $packagesConfigUrl = "https://raw.githubusercontent.com/michaelkeates/AutoWinScripts/main/minimal/packages.config"
 Invoke-WebRequest -Uri $packagesConfigUrl -OutFile "$scriptDirectory\packages.config"
 
