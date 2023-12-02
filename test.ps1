@@ -20,4 +20,4 @@ function RunGitHubScript($scriptUrl) {
 # Run the GitHub scripts
 RunGitHubScript -scriptUrl $hardwareUrl
 RunGitHubScript -scriptUrl $systemrestoreUrl
-RunGitHubScript -scriptUrl $installchocolatey_new
+RunGitHubScript -scriptUrl $installchocolateyUrl
